@@ -1,0 +1,211 @@
+import React from 'react'
+import Link from 'next/link'
+import HeroSection from '@/components/ui/HeroSection'
+import PropertyCard from '@/components/ui/PropertyCard'
+import RegionCard from '@/components/ui/RegionCard'
+import TestimonialsSection from '@/components/home/TestimonialsSection'
+import { Button } from '@/components/ui/button'
+import { PhoneCall, MapPin, Building, Award, Clock } from 'lucide-react'
+import { Property } from '@/lib/models/property'
+import { Region } from '@/lib/models/region'
+import { connectDB } from '@/lib/mongodb'
+
+const heroImages = [
+  "https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg",
+  "https://images.pexels.com/photos/2613946/pexels-photo-2613946.jpeg",
+  "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
+]
+
+async function getFeaturedProperties() {
+  const db = await connectDB();
+  if (!db) return [];
+  
+  try {
+    return await Property.find({ isFeatured: true }).sort({ createdAt: -1 });
+  } catch (error) {
+    console.error('Error fetching featured properties:', error);
+    return [];
+  }
+}
+
+async function getRegions() {
+  const db = await connectDB();
+  if (!db) return [];
+  
+  try {
+    return await Region.find({}).sort({ createdAt: -1 });
+  } catch (error) {
+    console.error('Error fetching regions:', error);
+    return [];
+  }
+}
+
+export const metadata = {
+  title: 'Hunza Land For Sale - Premium Properties in Northern Pakistan',
+  description: 'Discover exclusive land opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential.',
+  keywords: ['Hunza land', 'property for sale', 'Gilgit real estate', 'Naltar Valley plots', 'Sost Dry Port commercial property', 'Attabad Lake land', 'Pakistan northern areas property', 'mountain view plots', 'investment property Pakistan', 'commercial plots Gilgit'],
+  openGraph: {
+    title: 'Hunza Land For Sale - Premium Properties in Northern Pakistan',
+    description: 'Discover exclusive land opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential.',
+    images: ['https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg'],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hunza Land For Sale - Premium Properties in Northern Pakistan',
+    description: 'Discover exclusive land opportunities in Hunza, Gilgit, and surrounding regions.',
+    images: ['https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg'],
+  },
+  alternates: {
+    canonical: 'https://www.hunzaland.com',
+  },
+};
+
+export default async function Home() {
+  const [featuredProperties, regions] = await Promise.all([
+    getFeaturedProperties(),
+    getRegions()
+  ]);
+  
+  return (
+    <div className="flex flex-col min-h-screen">
+      <HeroSection 
+        title="Premium Land for Sale in Northern Pakistan"
+        subtitle="Discover exclusive investment opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential."
+        images={heroImages}
+      />
+      
+      <section className="py-16 bg-white dark:bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              We offer premium land and property opportunities in the most scenic locations of northern Pakistan.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Building className="h-7 w-7 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Premium Locations</h3>
+              <p className="text-muted-foreground">
+                Carefully selected plots in the most desirable and scenic locations across northern Pakistan.
+              </p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Award className="h-7 w-7 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Legal Documentation</h3>
+              <p className="text-muted-foreground">
+                All our properties come with clean titles and complete legal documentation for your peace of mind.
+              </p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <MapPin className="h-7 w-7 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Local Expertise</h3>
+              <p className="text-muted-foreground">
+                Decades of experience and deep local knowledge of the northern Pakistan property market.
+              </p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Clock className="h-7 w-7 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">24/7 Support</h3>
+              <p className="text-muted-foreground">
+                Our dedicated team is always available to answer your questions and provide guidance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Properties</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Explore our most exceptional land opportunities across northern Pakistan.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProperties.length === 0 ? (
+              <div className="col-span-full text-center py-8">
+                <p className="text-muted-foreground">No featured properties available at the moment.</p>
+              </div>
+            ) : (
+              featuredProperties.map((property) => (
+                <PropertyCard key={property._id} property={property} featured={true} />
+              ))
+            )}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Button asChild size="lg">
+              <Link href="/hunza">
+                View All Properties
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      <section className="py-16 bg-white dark:bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Explore Regions</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Discover properties across the most scenic locations in northern Pakistan.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {regions.map((region) => (
+              <RegionCard
+                key={region._id}
+                title={region.title}
+                description={region.description}
+                imageSrc={region.imageSrc}
+                href={`/${region.slug}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      <TestimonialsSection />
+      
+      <section className="py-16 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Find Your Perfect Property?</h2>
+          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+            Contact us today to discuss your requirements and discover the perfect land opportunity.
+          </p>
+          <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+            <Button size="lg" variant="secondary" asChild>
+              <a href="tel:+923468824466">
+                <PhoneCall className="mr-2 h-5 w-5" />
+                Call: 0346882446
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white/10" asChild>
+              <Link href="/contact">
+                Contact Us
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
