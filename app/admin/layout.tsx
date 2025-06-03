@@ -1,19 +1,25 @@
-"use client"
+"use client";
 
-import { useSession, signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import { Loader2, LogOut, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { useSession, signOut } from "next-auth/react";
+import { useRouter, usePathname } from "next/navigation";
+import { Loader2, LogOut, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (status === "authenticated" && pathname === "/admin/login") {
+      router.push("/admin");
+    } else if (status === "unauthenticated" && pathname !== "/admin/login") {
+      router.push("/admin/login");
+    }
+  }, [status, pathname, router]);
 
   if (status === "loading") {
     return (
@@ -21,14 +27,6 @@ export default function AdminLayout({
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
-  }
-
-  if (!session && window.location.pathname !== '/admin/login') {
-    redirect('/admin/login');
-  }
-
-  if (window.location.pathname === '/admin/login' && session) {
-    redirect('/admin');
   }
 
   return (
@@ -42,11 +40,7 @@ export default function AdminLayout({
             className="lg:hidden fixed top-20 left-4 z-50"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           >
-            {isSidebarOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
+            {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
 
           {/* Sidebar Overlay */}
@@ -70,53 +64,36 @@ export default function AdminLayout({
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => signOut({ callbackUrl: '/admin/login' })}
+                  onClick={() => signOut({ callbackUrl: "/admin/login" })}
                   className="hover:text-destructive"
                 >
                   <LogOut className="h-5 w-5" />
                 </Button>
               </div>
               <ul className="space-y-2">
-                <li>
-                  <a 
-                    href="/admin/properties" 
-                    className="block px-4 py-2 rounded-md hover:bg-accent"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    Properties
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="/admin/inquiries" 
-                    className="block px-4 py-2 rounded-md hover:bg-accent"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    Inquiries
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="/admin/settings" 
-                    className="block px-4 py-2 rounded-md hover:bg-accent"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    Settings
-                  </a>
-                </li>
+                {[
+                  { href: "/admin/properties", label: "Properties" },
+                  { href: "/admin/cars", label: "Rent a Car" },
+                ].map(({ href, label }) => (
+                  <li key={href}>
+                    <a
+                      href={href}
+                      className="block px-4 py-2 rounded-md hover:bg-accent"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </nav>
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 lg:ml-64 p-4 lg:p-8 overflow-auto">
-            {children}
-          </main>
+          <main className="flex-1 lg:ml-64 p-4 lg:p-8 overflow-auto">{children}</main>
         </div>
       ) : (
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
       )}
     </div>
   );

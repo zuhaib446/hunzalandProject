@@ -14,6 +14,7 @@ const navLinks = [
   { name: 'Naltar Land', href: '/naltar' },
   { name: 'Sost Dry Port Land', href: '/sost-dry-port' },
   { name: 'Attabad Lake Land', href: '/attabad-lake' },
+  { name: 'Rent a Car', href: '/rent-a-car' },
   { name: 'Contact us', href: '/contact' },
 ]
 
@@ -55,15 +56,12 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <Button size="sm" className="ml-2 bg-primary hover:bg-primary/90">
-            Call Now
-          </Button>
         </nav>
 
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle menu</span>
             </Button>
@@ -80,9 +78,6 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Button className="mt-4 bg-primary hover:bg-primary/90">
-                Call Now: 0346882446
-              </Button>
             </div>
           </SheetContent>
         </Sheet>
