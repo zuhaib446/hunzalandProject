@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const regions = [
   {
-    title: "Hunza Valley",
+    title: "Hunza Land for Sale",
     description: "Exclusive plots with breathtaking mountain views",
     imageSrc: "https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg",
     slug: "hunza",
@@ -11,7 +11,7 @@ const regions = [
     updatedAt: new Date()
   },
   {
-    title: "Gilgit City",
+    title: "Gilgit land for Sale",
     description: "Prime commercial and residential properties",
     imageSrc: "https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg",
     slug: "gilgit",
@@ -19,7 +19,7 @@ const regions = [
     updatedAt: new Date()
   },
   {
-    title: "Naltar Valley",
+    title: "Naltar Valley land for Sale",
     description: "Land perfect for ski resorts and winter tourism",
     imageSrc: "https://images.pexels.com/photos/376697/pexels-photo-376697.jpeg",
     slug: "naltar",
@@ -27,7 +27,7 @@ const regions = [
     updatedAt: new Date()
   },
   {
-    title: "Sost Dry Port",
+    title: "Sost Dry Port land for Sale",
     description: "Strategic commercial plots with trade potential",
     imageSrc: "https://images.pexels.com/photos/3760323/pexels-photo-3760323.jpeg",
     slug: "sost-dry-port",
@@ -35,10 +35,18 @@ const regions = [
     updatedAt: new Date()
   },
   {
-    title: "Attabad Lake",
+    title: "Attabad Lake land for Sale",
     description: "Stunning lakefront properties for tourism development",
     imageSrc: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
     slug: "attabad-lake",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    title: "Skardu land for Sale",
+    description: "Picturesque plots with access to Skardu's natural beauty",
+    imageSrc: "https://images.pexels.com/photos/3760323/pexels-photo-3760323.jpeg",
+    slug: "skardu-valley",
     createdAt: new Date(),
     updatedAt: new Date()
   }
@@ -101,6 +109,9 @@ const cars = [
     description: "Luxury 4x4 SUV perfect for mountain terrain. Comfortable seating for 7 passengers with ample luggage space.",
     pricePerDay: 15000,
     isAvailable: true,
+    isFeatured: true,
+    withDriver: true,
+    fuelIncluded: true,
     images: [
       "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg",
       "https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg"
@@ -113,6 +124,9 @@ const cars = [
     description: "Reliable double cabin pickup with excellent off-road capabilities. Perfect for adventure trips.",
     pricePerDay: 12000,
     isAvailable: true,
+    isFeatured: true,
+    withDriver: true,
+    fuelIncluded: false,
     images: [
       "https://images.pexels.com/photos/2676096/pexels-photo-2676096.jpeg",
       "https://images.pexels.com/photos/2676097/pexels-photo-2676097.jpeg"
@@ -125,6 +139,9 @@ const cars = [
     description: "Spacious van suitable for family trips. Comfortable seating for 8 passengers with roof carrier.",
     pricePerDay: 8000,
     isAvailable: true,
+    isFeatured: false,
+    withDriver: true,
+    fuelIncluded: false,
     images: [
       "https://images.pexels.com/photos/2533092/pexels-photo-2533092.jpeg",
       "https://images.pexels.com/photos/2533093/pexels-photo-2533093.jpeg"

@@ -17,6 +17,18 @@ const carSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  isFeatured: {
+    type: Boolean,
+    default: false,
+  },
+  withDriver: {
+    type: Boolean,
+    default: true,
+  },
+  fuelIncluded: {
+    type: Boolean,
+    default: false,
+  },
   images: [{
     type: String,
     required: true,

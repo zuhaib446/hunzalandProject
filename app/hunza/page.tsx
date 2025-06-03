@@ -4,11 +4,13 @@ import PropertyCard from '@/components/ui/PropertyCard'
 import { Property } from '@/lib/models/property'
 import { connectDB } from '@/lib/mongodb'
 
+
+// get real image URL of Hunza from any free image source
 const heroImages = [
-  "https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg",
-  "https://images.pexels.com/photos/2356045/pexels-photo-2356045.jpeg",
-  "https://images.pexels.com/photos/2613946/pexels-photo-2613946.jpeg"
-]
+  'https://images.pexels.com/photos/2419278/pexels-photo-2419278.jpeg',
+  'https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg',
+  'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'
+];
 
 async function getHunzaProperties() {
   const db = await connectDB();

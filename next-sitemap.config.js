@@ -1,12 +1,12 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://www.hunzaland.com',
+  siteUrl: 'https://hunzarealestate.com',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: ['/admin/*'],
   robotsTxtOptions: {
     additionalSitemaps: [
-      'https://www.hunzaland.com/server-sitemap.xml',
+      'https://hunzarealestate.com/server-sitemap.xml',
     ],
     policies: [
       {

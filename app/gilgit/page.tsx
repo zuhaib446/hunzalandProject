@@ -22,6 +22,7 @@ async function getGilgitProperties() {
   }
 }
 
+
 export default async function GilgitPage() {
   const properties = await getGilgitProperties();
   

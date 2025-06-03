@@ -10,7 +10,18 @@ import { toast } from 'sonner'
 import { Property } from '@/lib/properties'
 
 interface PropertyCardProps {
-  property: Property;
+  property: {
+    _id: string;
+    title: string;
+    location: string;
+    area: string;
+    price: string;
+    description: string;
+    features: string[];
+    images: string[];
+    isFeatured?: boolean;
+    region: string;
+  };
   featured?: boolean;
 }
 
@@ -20,14 +31,17 @@ export default function PropertyCard({ property, featured = false }: PropertyCar
     toast.success("Calling agent...");
   };
 
+  // Convert Mongoose document to plain object if needed
+  const propertyData = property.toJSON ? property.toJSON() : property;
+
   return (
     <Card className={`overflow-hidden transition-shadow hover:shadow-lg ${
       featured ? 'border-primary/20' : ''
     }`}>
       <div className="relative h-48 md:h-64">
         <Image
-          src={property.images[0]}
-          alt={property.title}
+          src={propertyData.images[0]}
+          alt={propertyData.title}
           fill
           className="object-cover"
         />
@@ -42,28 +56,28 @@ export default function PropertyCard({ property, featured = false }: PropertyCar
       
       <CardContent className="p-4">
         <h3 className="text-lg font-semibold mb-2 line-clamp-2">
-          {property.title}
+          {propertyData.title}
         </h3>
         
         <div className="flex items-center text-muted-foreground mb-3">
           <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
-          <span className="text-sm truncate">{property.location}</span>
+          <span className="text-sm truncate">{propertyData.location}</span>
         </div>
         
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex items-center">
             <Square className="h-4 w-4 text-primary mr-1" />
-            <span className="text-sm">{property.area}</span>
+            <span className="text-sm">{propertyData.area}</span>
           </div>
           
           <div className="flex items-center">
             <Wallet className="h-4 w-4 text-primary mr-1" />
-            <span className="text-sm font-medium">{property.price}</span>
+            <span className="text-sm font-medium">{propertyData.price}</span>
           </div>
         </div>
         
         <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-          {property.description}
+          {propertyData.description}
         </p>
         
         <div className="flex space-x-2">
@@ -77,7 +91,7 @@ export default function PropertyCard({ property, featured = false }: PropertyCar
           </Button>
           
           <Button asChild className="flex-1">
-            <Link href={`/property/${property._id}`}>
+            <Link href={`/property/${propertyData._id}`}>
               View Details
             </Link>
           </Button>

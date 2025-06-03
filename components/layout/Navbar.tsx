@@ -14,6 +14,7 @@ const navLinks = [
   { name: 'Naltar Land', href: '/naltar' },
   { name: 'Sost Dry Port Land', href: '/sost-dry-port' },
   { name: 'Attabad Lake Land', href: '/attabad-lake' },
+  { name: 'Skardu Land', href: '/skardu' },
   { name: 'Rent a Car', href: '/rent-a-car' },
   { name: 'Contact us', href: '/contact' },
 ]

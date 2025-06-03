@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
+import { toast, Toaster } from 'sonner'; // or 'react-hot-toast' if you use that package
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,8 +24,13 @@ export default function LoginPage() {
         redirect: false,
       });
 
-      if (result?.error) {
-        toast.error('Invalid credentials');
+      if (result && result.error) {
+        toast.error(
+          result.error === 'CredentialsSignin'
+            ? 'Invalid email or password'
+            : 'An error occurred during sign-in'
+        );
+        setIsLoading(false);
         return;
       }
 
@@ -84,6 +89,7 @@ export default function LoginPage() {
           </Button>
         </form>
       </div>
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
