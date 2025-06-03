@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import {
   Table,
@@ -33,7 +34,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Plus, Pencil, Trash2 } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
 
 type Car = {
   _id: string;
@@ -41,6 +41,9 @@ type Car = {
   description: string;
   pricePerDay: number;
   isAvailable: boolean;
+  isFeatured: boolean;
+  withDriver: boolean;
+  fuelIncluded: boolean;
   images: string[];
 };
 
@@ -81,6 +84,9 @@ export default function CarsPage() {
           description: formData.get('description'),
           pricePerDay: Number(formData.get('pricePerDay')),
           isAvailable: formData.get('isAvailable') === 'true',
+          isFeatured: formData.get('isFeatured') === 'true',
+          withDriver: formData.get('withDriver') === 'true',
+          fuelIncluded: formData.get('fuelIncluded') === 'true',
           images: formData.get('images')?.toString().split('\n').filter(Boolean),
         }),
       });
@@ -116,15 +122,6 @@ export default function CarsPage() {
       toast.error('Failed to delete car');
     }
   }
-
-  interface HandleEditCar {
-    (car: Car): void;
-  }
-
-  const handleEdit: HandleEditCar = (car) => {
-    setEditingCar(car);
-    setIsDialogOpen(true);
-  };
 
   return (
     <div className="space-y-6">
@@ -196,16 +193,54 @@ export default function CarsPage() {
                 />
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="isAvailable"
-                  name="isAvailable"
-                  defaultChecked={editingCar?.isAvailable ?? true}
-                  value="true"
-                />
-                <label htmlFor="isAvailable" className="text-sm font-medium">
-                  Available for Rent
-                </label>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="isAvailable"
+                    name="isAvailable"
+                    defaultChecked={editingCar?.isAvailable ?? true}
+                    value="true"
+                  />
+                  <label htmlFor="isAvailable" className="text-sm font-medium">
+                    Available for Rent
+                  </label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="isFeatured"
+                    name="isFeatured"
+                    defaultChecked={editingCar?.isFeatured ?? false}
+                    value="true"
+                  />
+                  <label htmlFor="isFeatured" className="text-sm font-medium">
+                    Featured Car
+                  </label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="withDriver"
+                    name="withDriver"
+                    defaultChecked={editingCar?.withDriver ?? true}
+                    value="true"
+                  />
+                  <label htmlFor="withDriver" className="text-sm font-medium">
+                    With Driver
+                  </label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="fuelIncluded"
+                    name="fuelIncluded"
+                    defaultChecked={editingCar?.fuelIncluded ?? false}
+                    value="true"
+                  />
+                  <label htmlFor="fuelIncluded" className="text-sm font-medium">
+                    Fuel Included
+                  </label>
+                </div>
               </div>
 
               <DialogFooter>
@@ -225,13 +260,16 @@ export default function CarsPage() {
               <TableHead>Title</TableHead>
               <TableHead>Price Per Day</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Featured</TableHead>
+              <TableHead>Driver</TableHead>
+              <TableHead>Fuel</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {cars.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-8">
+                <TableCell colSpan={7} className="text-center py-8">
                   No cars found
                 </TableCell>
               </TableRow>
@@ -250,11 +288,23 @@ export default function CarsPage() {
                     </span>
                   </TableCell>
                   <TableCell>
+                    {car.isFeatured ? 'Yes' : 'No'}
+                  </TableCell>
+                  <TableCell>
+                    {car.withDriver ? 'Included' : 'Not Included'}
+                  </TableCell>
+                  <TableCell>
+                    {car.fuelIncluded ? 'Included' : 'Not Included'}
+                  </TableCell>
+                  <TableCell>
                     <div className="flex space-x-2">
                       <Button 
                         variant="outline" 
                         size="icon"
-                        onClick={() => handleEdit(car)}
+                        onClick={() => {
+                          setEditingCar(car);
+                          setIsDialogOpen(true);
+                        }}
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
