@@ -77,6 +77,7 @@ export default function PropertiesPage() {
   };
   const [properties, setProperties] = useState<Property[]>([]);
   const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
+  const [editProperty, setEditProperty] = useState<Property | null>(null);
 
   useEffect(() => {
     fetchRegions();
@@ -247,7 +248,7 @@ export default function PropertiesPage() {
                     <SelectValue placeholder="Select a region" />
                   </SelectTrigger>
                   <SelectContent>
-                    {regions.map((region) => (
+                    {regions && regions.map((region) => (
                       <SelectItem key={region._id} value={region.slug}>
                         {region.title}
                       </SelectItem>
@@ -316,6 +317,194 @@ export default function PropertiesPage() {
             </form>
           </DialogContent>
         </Dialog>
+
+        <Dialog open={!!editProperty} onOpenChange={() => setEditProperty(null)}>
+          <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Property</DialogTitle>
+            </DialogHeader>
+            {editProperty && (
+              <form
+                onSubmit={async (event) => {
+                  event.preventDefault();
+                  setIsLoading(true);
+                  try {
+                    const formData = new FormData(event.currentTarget);
+                    const response = await fetch('/api/properties/' + editProperty._id, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        title: formData.get('title'),
+                        description: formData.get('description'),
+                        location: formData.get('location'),
+                        price: formData.get('price'),
+                        area: formData.get('area'),
+                        region: formData.get('region'),
+                        features: selectedFeatures,
+                        images: formData.get('images')?.toString().split('\n').filter(Boolean),
+                        isFeatured: formData.get('isFeatured') === 'true'
+                      }),
+                    });
+                    if (!response.ok) throw new Error('Failed to update property');
+                    await fetchProperties();
+                    toast.success('Property updated successfully');
+                    setEditProperty(null);
+                    setSelectedFeatures([]);
+                  } catch (error) {
+                    toast.error('Failed to update property');
+                  } finally {
+                    setIsLoading(false);
+                  }
+                }}
+                className="space-y-4"
+              >
+                <div className="space-y-2">
+                  <label htmlFor="title" className="text-sm font-medium">
+                    Title
+                  </label>
+                  <Input
+                    id="title"
+                    name="title"
+                    required
+                    disabled={isLoading}
+                    defaultValue={editProperty.title}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="description" className="text-sm font-medium">
+                    Description
+                  </label>
+                  <Textarea
+                    id="description"
+                    name="description"
+                    required
+                    disabled={isLoading}
+                    defaultValue={editProperty.description}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label htmlFor="price" className="text-sm font-medium">
+                      Price
+                    </label>
+                    <Input
+                      id="price"
+                      name="price"
+                      required
+                      disabled={isLoading}
+                      defaultValue={editProperty.price}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="area" className="text-sm font-medium">
+                      Area
+                    </label>
+                    <Input
+                      id="area"
+                      name="area"
+                      required
+                      disabled={isLoading}
+                      defaultValue={editProperty.area}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="location" className="text-sm font-medium">
+                    Location
+                  </label>
+                  <Input
+                    id="location"
+                    name="location"
+                    required
+                    disabled={isLoading}
+                    defaultValue={editProperty.location}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="region" className="text-sm font-medium">
+                    Region
+                  </label>
+                  <Select name="region" required defaultValue={editProperty.region}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a region" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {regions && regions.map((region) => (
+                        <SelectItem key={region._id} value={region.slug}>
+                          {region.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Features</label>
+                  <div className="grid grid-cols-2 gap-2 border rounded-lg p-4 max-h-48 overflow-y-auto">
+                    {commonFeatures.map((feature) => (
+                      <div key={feature} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={feature}
+                          checked={selectedFeatures.includes(feature)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedFeatures(prev => [...prev, feature]);
+                            } else {
+                              setSelectedFeatures(prev => prev.filter(f => f !== feature));
+                            }
+                          }}
+                        />
+                        <label htmlFor={feature} className="text-sm">
+                          {feature}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="images" className="text-sm font-medium">
+                    Images (One URL per line)
+                  </label>
+                  <Textarea
+                    id="images"
+                    name="images"
+                    required
+                    disabled={isLoading}
+                    defaultValue={editProperty.images.join('\n')}
+                    placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">
+                    Featured Property
+                  </label>
+                  <Select name="isFeatured" defaultValue={editProperty.isFeatured ? "true" : "false"}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Is this a featured property?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">Yes</SelectItem>
+                      <SelectItem value="false">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <DialogFooter>
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? 'Saving...' : 'Save Changes'}
+                  </Button>
+                </DialogFooter>
+              </form>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="border rounded-lg overflow-x-auto">
@@ -345,7 +534,11 @@ export default function PropertiesPage() {
                   <TableCell>{property.price}</TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
-                      <Button variant="outline" size="icon">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setEditProperty(property)}
+                      >
                         <Pencil className="h-4 w-4" />
                       </Button>
                       <AlertDialog>

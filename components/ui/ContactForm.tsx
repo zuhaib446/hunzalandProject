@@ -36,9 +36,11 @@ export default function ContactForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    toast.success('Message sent! We will contact you shortly.')
-    form.reset()
+    const message = `Name: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone}\nMessage: ${values.message}`;
+    const whatsappUrl = `https://wa.me/923468824466?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    toast.success('Redirecting to WhatsApp...');
+    form.reset();
   }
 
   return (

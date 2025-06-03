@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/naltar',
     '/sost-dry-port',
     '/attabad-lake',
+    '/rent-a-car',
     '/contact',
   ].map((route) => ({
     url: `${baseUrl}${route}`,

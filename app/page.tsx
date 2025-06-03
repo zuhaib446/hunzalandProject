@@ -3,12 +3,13 @@ import Link from 'next/link'
 import HeroSection from '@/components/ui/HeroSection'
 import PropertyCard from '@/components/ui/PropertyCard'
 import RegionCard from '@/components/ui/RegionCard'
-import TestimonialsSection from '@/components/home/TestimonialsSection'
 import { Button } from '@/components/ui/button'
 import { PhoneCall, MapPin, Building, Award, Clock } from 'lucide-react'
 import { Property } from '@/lib/models/property'
 import { Region } from '@/lib/models/region'
+import { Car } from '@/lib/models/car'
 import { connectDB } from '@/lib/mongodb'
+import { Card } from '@/components/ui/card'
 
 const heroImages = [
   "https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg",
@@ -40,32 +41,23 @@ async function getRegions() {
   }
 }
 
-export const metadata = {
-  title: 'Hunza Land For Sale - Premium Properties in Northern Pakistan',
-  description: 'Discover exclusive land opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential.',
-  keywords: ['Hunza land', 'property for sale', 'Gilgit real estate', 'Naltar Valley plots', 'Sost Dry Port commercial property', 'Attabad Lake land', 'Pakistan northern areas property', 'mountain view plots', 'investment property Pakistan', 'commercial plots Gilgit'],
-  openGraph: {
-    title: 'Hunza Land For Sale - Premium Properties in Northern Pakistan',
-    description: 'Discover exclusive land opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential.',
-    images: ['https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg'],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Hunza Land For Sale - Premium Properties in Northern Pakistan',
-    description: 'Discover exclusive land opportunities in Hunza, Gilgit, and surrounding regions.',
-    images: ['https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg'],
-  },
-  alternates: {
-    canonical: 'https://www.hunzaland.com',
-  },
-};
+async function getFeaturedCars() {
+  const db = await connectDB();
+  if (!db) return [];
+  
+  try {
+    return await Car.find({ isAvailable: true }).limit(3).sort({ createdAt: -1 });
+  } catch (error) {
+    console.error('Error fetching featured cars:', error);
+    return [];
+  }
+}
 
 export default async function Home() {
-  const [featuredProperties, regions] = await Promise.all([
+  const [featuredProperties, regions, featuredCars] = await Promise.all([
     getFeaturedProperties(),
-    getRegions()
+    getRegions(),
+    getFeaturedCars()
   ]);
   
   return (
@@ -182,8 +174,58 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
-      <TestimonialsSection />
+
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Cars for Rent</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Explore northern Pakistan with our premium car rental service
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredCars.map((car) => (
+              <Card key={car._id} className="overflow-hidden">
+                <div className="aspect-video relative">
+                  <img 
+                    src={car.images[0]} 
+                    alt={car.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{car.title}</h3>
+                  <p className="text-muted-foreground mb-4">{car.description}</p>
+                  <p className="text-lg font-semibold mb-4">
+                    PKR {car.pricePerDay.toLocaleString()} / day
+                  </p>
+                  <Button asChild className="w-full">
+                    <a
+                      href={`https://wa.me/923468824466?text=I%20am%20interested%20in%20renting%20this%20car:%20${encodeURIComponent(car.title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Book Now
+                    </a>
+                  </Button>
+                </div>
+              </Card>
+            ))}
+            {featuredCars.length === 0 && (
+              <div className="col-span-full text-center py-8">
+                <p className="text-muted-foreground">No cars available at the moment.</p>
+              </div>
+            )}
+          </div>
+
+          <div className="text-center mt-8">
+            <Button asChild size="lg">
+              <Link href="/rent-a-car">View All Cars</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
       
       <section className="py-16 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
