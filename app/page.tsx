@@ -10,12 +10,22 @@ import { Region } from '@/lib/models/region'
 import { Car } from '@/lib/models/car'
 import { connectDB } from '@/lib/mongodb'
 import { Card } from '@/components/ui/card'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
 const heroImages = [
   "https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg",
   "https://images.pexels.com/photos/2613946/pexels-photo-2613946.jpeg",
   "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
 ]
+
+const ITEMS_PER_PAGE = 10;
 
 async function getFeaturedProperties() {
   const db = await connectDB();
@@ -26,6 +36,29 @@ async function getFeaturedProperties() {
   } catch (error) {
     console.error('Error fetching featured properties:', error);
     return [];
+  }
+}
+
+async function getAllProperties(page = 1) {
+  const db = await connectDB();
+  if (!db) return { properties: [], totalPages: 0 };
+  
+  try {
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+    const totalCount = await Property.countDocuments();
+    const properties = await Property.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(ITEMS_PER_PAGE)
+      .lean();
+
+    return {
+      properties,
+      totalPages: Math.ceil(totalCount / ITEMS_PER_PAGE)
+    };
+  } catch (error) {
+    console.error('Error fetching all properties:', error);
+    return { properties: [], totalPages: 0 };
   }
 }
 
@@ -46,16 +79,22 @@ async function getFeaturedCars() {
   if (!db) return [];
   
   try {
-    return await Car.find({ isAvailable: true }).limit(3).sort({ createdAt: -1 });
+    return await Car.find({ isAvailable: true, isFeatured: true }).limit(3).sort({ createdAt: -1 });
   } catch (error) {
     console.error('Error fetching featured cars:', error);
     return [];
   }
 }
 
-export default async function Home() {
-  const [featuredProperties, regions, featuredCars] = await Promise.all([
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { page?: string }
+}) {
+  const page = Number(searchParams?.page) || 1;
+  const [featuredProperties, { properties, totalPages }, regions, featuredCars] = await Promise.all([
     getFeaturedProperties(),
+    getAllProperties(page),
     getRegions(),
     getFeaturedCars()
   ]);
@@ -63,7 +102,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <HeroSection 
-        title="Premium Land for Sale in Northern Pakistan"
+        title="Premium Properties in Northern Pakistan"
         subtitle="Discover exclusive investment opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential."
         images={heroImages}
       />
@@ -178,6 +217,54 @@ export default async function Home() {
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">All Properties</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Explore our complete collection of premium properties across northern Pakistan.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {properties.map((property) => (
+              <PropertyCard key={property._id} property={property} />
+            ))}
+          </div>
+          
+          {totalPages > 1 && (
+            <div className="mt-8">
+              <Pagination>
+                <PaginationContent>
+                  {page > 1 && (
+                    <PaginationItem>
+                      <PaginationPrevious href={`/?page=${page - 1}`} />
+                    </PaginationItem>
+                  )}
+                  
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        href={`/?page=${pageNum}`}
+                        isActive={pageNum === page}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  
+                  {page < totalPages && (
+                    <PaginationItem>
+                      <PaginationNext href={`/?page=${page + 1}`} />
+                    </PaginationItem>
+                  )}
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
+        </div>
+      </section>
+      
+      <section className="py-16 bg-white dark:bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Cars for Rent</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Explore northern Pakistan with our premium car rental service
@@ -197,26 +284,25 @@ export default async function Home() {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{car.title}</h3>
                   <p className="text-muted-foreground mb-4">{car.description}</p>
-                  <p className="text-lg font-semibold mb-4">
-                    PKR {car.pricePerDay.toLocaleString()} / day
-                  </p>
+                  <div className="space-y-2 mb-4">
+                    <p className="text-lg font-semibold">
+                      PKR {car.pricePerDay.toLocaleString()} / day
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {car.withDriver ? "Driver Included" : "Self Drive Available"}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {car.fuelIncluded ? "Fuel Included" : "Fuel Not Included"}
+                    </p>
+                  </div>
                   <Button asChild className="w-full">
-                    <a
-                      href={`https://wa.me/923468824466?text=I%20am%20interested%20in%20renting%20this%20car:%20${encodeURIComponent(car.title)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Book Now
-                    </a>
+                    <Link href="/rent-a-car">
+                      View Details
+                    </Link>
                   </Button>
                 </div>
               </Card>
             ))}
-            {featuredCars.length === 0 && (
-              <div className="col-span-full text-center py-8">
-                <p className="text-muted-foreground">No cars available at the moment.</p>
-              </div>
-            )}
           </div>
 
           <div className="text-center mt-8">
