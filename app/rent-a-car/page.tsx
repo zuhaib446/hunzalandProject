@@ -1,9 +1,51 @@
-"use client"
 import React from 'react'
 import { Car } from '@/lib/models/car'
 import { connectDB } from '@/lib/mongodb'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { Metadata } from 'next'
+import CarList from './CarList';
+
+export const metadata: Metadata = {
+  title: 'Rent a Car - Hunza, Gilgit, Skardu',
+  description: 'Explore the breathtaking northern areas of Pakistan with our premium car rental services. Rent a car in Hunza, Gilgit, and Skardu for an unforgettable journey.',
+  keywords: [
+    'rent a car Hunza',
+    'car rental Gilgit',
+    'Skardu car hire',
+    'northern Pakistan car rental',
+    'premium car rental Hunza',
+    'explore Hunza by car',
+    'Gilgit car hire services',
+    'Skardu vehicle rental',
+    'car rental northern areas',
+    'affordable car rental Hunza',
+    'luxury car rental Gilgit',
+    '4x4 rental Hunza',
+    'SUV rental Skardu',
+    'car rental with driver Hunza',
+    'self-drive car rental Gilgit',
+    'rent a car Skardu',
+    'car rental services Pakistan',
+    'Hunza Valley car rental',
+    'Gilgit Baltistan car hire',
+    'rent a car northern Pakistan',
+    'explore Skardu by car',
+    'car rental for tourists Hunza',
+    'adventure car rental Gilgit'
+  ],
+  openGraph: {
+    title: 'Rent a Car - Hunza, Gilgit, Skardu',
+    description: 'Explore the breathtaking northern areas of Pakistan with our premium car rental services. Rent a car in Hunza, Gilgit, and Skardu for an unforgettable journey.',
+    url: 'https://www.hunzarealestate.com/rent-a-car',
+    images: [
+      {
+        url: 'https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Rent a Car in Hunza'
+      }
+    ]
+  }
+}
 
 async function getCars() {
   const db = await connectDB();
@@ -30,49 +72,7 @@ export default async function RentACarPage() {
             Explore the breathtaking northern areas of Pakistan with our premium car rental services.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.map((car) => (
-            <Card key={car._id} className="overflow-hidden">
-              <div className="aspect-video relative">
-                <img 
-                  src={car.images[0]} 
-                  alt={car.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{car.title}</h3>
-                <p className="text-muted-foreground mb-4">{car.description}</p>
-                <div className="flex justify-between items-center mb-4">
-                  <p className="text-lg font-semibold">
-                    PKR {car.pricePerDay.toLocaleString()} / day
-                  </p>
-                  <span className={`px-3 py-1 rounded-full text-sm ${
-                    car.isAvailable 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
-                      : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                  }`}>
-                    {car.isAvailable ? 'Available' : 'Not Available'}
-                  </span>
-                </div>
-                <Button 
-                  className="w-full"
-                  disabled={!car.isAvailable}
-                  onClick={() => window.open('https://wa.me/923468824466?text=I%20am%20interested%20in%20renting%20this%20car:%20' + car.title, '_blank')}
-                >
-                  {car.isAvailable ? 'Book Now' : 'Not Available'}
-                </Button>
-              </div>
-            </Card>
-          ))}
-          {cars.length === 0 && (
-            <div className="col-span-full text-center py-12">
-              <p className="text-xl text-muted-foreground">No cars available at the moment.</p>
-              <p className="mt-2 text-muted-foreground">Please check back later or contact us for custom requirements.</p>
-            </div>
-          )}
-        </div>
+        <CarList cars={cars} />
       </div>
     </div>
   )

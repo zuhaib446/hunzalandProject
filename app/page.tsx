@@ -10,22 +10,13 @@ import { Region } from '@/lib/models/region'
 import { Car } from '@/lib/models/car'
 import { connectDB } from '@/lib/mongodb'
 import { Card } from '@/components/ui/card'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
 
 const heroImages = [
-  "https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg",
+  "https://scontent.fisb29-1.fna.fbcdn.net/v/t39.30808-6/476144270_1170414421758417_279955949777908870_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=rmtGVXY_gJIQ7kNvwFHmlA0&_nc_oc=AdmeTQgnHmEjPL3ImMBWq5W3FmXB2g4v2b4bNUF6fAjHy9WgRLwpbisNIpFtoPl6Mo8&_nc_zt=23&_nc_ht=scontent.fisb29-1.fna&_nc_gid=quBs0MGrthH6-z--emaalg&oh=00_AfLueX4bzMa3WFDqIw0AaQuzeT0E9RpuGlVn28c1aVAAQw&oe=684486C7",
   "https://images.pexels.com/photos/2613946/pexels-photo-2613946.jpeg",
   "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
 ]
 
-const ITEMS_PER_PAGE = 10;
 
 async function getFeaturedProperties() {
   const db = await connectDB();
@@ -36,29 +27,6 @@ async function getFeaturedProperties() {
   } catch (error) {
     console.error('Error fetching featured properties:', error);
     return [];
-  }
-}
-
-async function getAllProperties(page = 1) {
-  const db = await connectDB();
-  if (!db) return { properties: [], totalPages: 0 };
-  
-  try {
-    const skip = (page - 1) * ITEMS_PER_PAGE;
-    const totalCount = await Property.countDocuments();
-    const properties = await Property.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(ITEMS_PER_PAGE)
-      .lean();
-
-    return {
-      properties,
-      totalPages: Math.ceil(totalCount / ITEMS_PER_PAGE)
-    };
-  } catch (error) {
-    console.error('Error fetching all properties:', error);
-    return { properties: [], totalPages: 0 };
   }
 }
 
@@ -86,15 +54,10 @@ async function getFeaturedCars() {
   }
 }
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { page?: string }
-}) {
-  const page = Number(searchParams?.page) || 1;
-  const [featuredProperties, { properties, totalPages }, regions, featuredCars] = await Promise.all([
+export default async function Home() {
+
+  const [featuredProperties, regions, featuredCars] = await Promise.all([
     getFeaturedProperties(),
-    getAllProperties(page),
     getRegions(),
     getFeaturedCars()
   ]);
@@ -183,7 +146,7 @@ export default async function Home({
           
           <div className="text-center mt-12">
             <Button asChild size="lg">
-              <Link href="/hunza">
+              <Link href="/allProperty">
                 View All Properties
               </Link>
             </Button>
@@ -211,54 +174,6 @@ export default async function Home({
               />
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">All Properties</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore our complete collection of premium properties across northern Pakistan.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {properties.map((property) => (
-              <PropertyCard key={property._id} property={property} />
-            ))}
-          </div>
-          
-          {totalPages > 1 && (
-            <div className="mt-8">
-              <Pagination>
-                <PaginationContent>
-                  {page > 1 && (
-                    <PaginationItem>
-                      <PaginationPrevious href={`/?page=${page - 1}`} />
-                    </PaginationItem>
-                  )}
-                  
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                    <PaginationItem key={pageNum}>
-                      <PaginationLink
-                        href={`/?page=${pageNum}`}
-                        isActive={pageNum === page}
-                      >
-                        {pageNum}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-                  
-                  {page < totalPages && (
-                    <PaginationItem>
-                      <PaginationNext href={`/?page=${page + 1}`} />
-                    </PaginationItem>
-                  )}
-                </PaginationContent>
-              </Pagination>
-            </div>
-          )}
         </div>
       </section>
       

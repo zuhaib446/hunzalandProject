@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+
 export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground pt-16 pb-8">
@@ -57,6 +58,11 @@ export default function Footer() {
               <li>
                 <Link href="/attabad-lake" className="text-primary-foreground/90 hover:text-primary-foreground transition">
                   Attabad Lake
+                </Link>
+              </li>
+              <li>
+                <Link href="/skardu" className="text-primary-foreground/90 hover:text-primary-foreground transition">
+                  Skardu land for sale
                 </Link>
               </li>
             </ul>
