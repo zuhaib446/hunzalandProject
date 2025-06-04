@@ -17,7 +17,6 @@ const heroImages = [
   "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
 ]
 
-
 async function getFeaturedProperties() {
   const db = await connectDB();
   if (!db) return [];
@@ -55,7 +54,6 @@ async function getFeaturedCars() {
 }
 
 export default async function Home() {
-
   const [featuredProperties, regions, featuredCars] = await Promise.all([
     getFeaturedProperties(),
     getRegions(),
@@ -211,7 +209,7 @@ export default async function Home() {
                     </p>
                   </div>
                   <Button asChild className="w-full">
-                    <Link href="/rent-a-car">
+                    <Link href={`/rent-a-car/${car._id}`}>
                       View Details
                     </Link>
                   </Button>
