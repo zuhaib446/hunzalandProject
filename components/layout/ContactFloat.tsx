@@ -22,7 +22,7 @@ export default function ContactFloat() {
   }, [])
   
   const openWhatsApp = () => {
-    window.open('https://wa.me/923468824466?text=I%20am%20interested%20in%20land%20for%20sale', '_blank')
+    window.open('https://wa.me/923469750335?text=I%20am%20interested%20in%20land%20for%20sale', '_blank')
   }
   
   return (
@@ -41,7 +41,7 @@ export default function ContactFloat() {
         
         <Button
           as="a"
-          href="tel:+923468824466"
+          href="tel:+923469750335"
           className="rounded-full w-14 h-14 bg-primary hover:bg-primary/90 shadow-lg"
         >
           <Phone className="h-6 w-6" />
