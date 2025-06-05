@@ -69,9 +69,9 @@ export default async function Home() {
       />
 
       <section className="py-16 bg-white dark:bg-background">
-        <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">Why Choose Us</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               We offer premium land and property opportunities in the most scenic locations of northern Pakistan.
             </p>
@@ -122,10 +122,10 @@ export default async function Home() {
       </section>
 
       <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
+         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Properties</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">Featured Properties</h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Explore our most exceptional land opportunities across northern Pakistan.
             </p>
           </div>
@@ -155,8 +155,10 @@ export default async function Home() {
       <section className="py-16 bg-white dark:bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Explore Regions</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
+              Explore Regions
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Discover properties across the most scenic locations in northern Pakistan.
             </p>
           </div>
@@ -192,52 +194,55 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-16 bg-white dark:bg-background">
+      <section className="py-20 bg-gradient-to-b from-white to-muted dark:from-background dark:to-muted/10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Cars for Rent</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore northern Pakistan with our premium car rental service
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
+              Discover Our Featured Cars
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Explore the breathtaking landscapes of northern Pakistan with our luxury car rentals — comfort, class, and convenience all in one.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {featuredCars.map((car) => (
-              <Card key={car._id} className="overflow-hidden">
+              <Card key={car._id} className="overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="aspect-video relative">
                   <img
                     src={car.images[0]}
                     alt={car.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{car.title}</h3>
-                  <p className="text-muted-foreground mb-4">{car.description}</p>
-                  <div className="space-y-2 mb-4">
-                    <p className="text-lg font-semibold">
-                      PKR {car.pricePerDay.toLocaleString()} / day
+                <div className="p-6 bg-white dark:bg-muted/20">
+                  <h3 className="text-2xl font-bold text-primary mb-2">{car.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{car.description}</p>
+                  <div className="space-y-1 mb-6">
+                    <p className="text-lg font-semibold text-foreground">
+                      PKR {car.pricePerDay.toLocaleString()} <span className="text-sm text-muted-foreground">/ day</span>
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      {car.withDriver ? "Driver Included" : "Self Drive Available"}
+                    <p className="text-sm text-foreground">
+                      🚗 {car.withDriver ? "Driver Included" : "Self Drive Available"}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      {car.fuelIncluded ? "Fuel Included" : "Fuel Not Included"}
+                    <p className="text-sm text-foreground">
+                      ⛽ {car.fuelIncluded ? "Fuel Included" : "Fuel Not Included"}
                     </p>
+                    {!car.isAvailable && (
+                      <p className="text-sm text-red-500 font-medium">Currently Unavailable</p>
+                    )}
                   </div>
                   <Button asChild className="w-full">
-                    <Link href={`/rent-a-car/${car._id}`}>
-                      View Details
-                    </Link>
+                    <Link href={`/rent-a-car/${car._id}`}>View Details</Link>
                   </Button>
                 </div>
               </Card>
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <Button asChild size="lg">
-              <Link href="/rent-a-car">View All Cars</Link>
+          <div className="text-center mt-12">
+            <Button asChild size="lg" className="px-8 py-4 text-lg font-semibold rounded-xl">
+              <Link href="/rent-a-car">Browse All Cars</Link>
             </Button>
           </div>
         </div>
