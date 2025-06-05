@@ -53,8 +53,18 @@ async function getAllProperties(page: number, limit: number) {
     const properties = await Property.find({})
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
-      .limit(limit);
-    return { properties, total };
+      .limit(limit)
+      .lean(); // Add .lean() to get plain JS objects
+
+    // Convert _id and dates to string
+    const plainProperties = properties.map((property: any) => ({
+      ...property,
+      _id: property._id.toString(),
+      createdAt: property.createdAt?.toISOString?.() ?? '',
+      updatedAt: property.updatedAt?.toISOString?.() ?? '',
+    }));
+
+    return { properties: plainProperties, total };
   } catch (error) {
     console.error('Error fetching properties:', error);
     return { properties: [], total: 0 };

@@ -52,7 +52,13 @@ async function getCars() {
   if (!db) return [];
   
   try {
-    return await Car.find({}).sort({ createdAt: -1 });
+    const cars = await Car.find({}).sort({ createdAt: -1 }).lean();
+    return cars.map((car: any) => ({
+      ...car,
+      _id: car._id.toString(),
+      createdAt: car.createdAt?.toISOString?.() ?? '',
+      updatedAt: car.updatedAt?.toISOString?.() ?? '',
+    }));
   } catch (error) {
     console.error('Error fetching cars:', error);
     return [];

@@ -20,9 +20,14 @@ const heroImages = [
 async function getFeaturedProperties() {
   const db = await connectDB();
   if (!db) return [];
-
   try {
-    return await Property.find({ isFeatured: true }).sort({ createdAt: -1 });
+    const properties = await Property.find({ isFeatured: true }).sort({ createdAt: -1 }).lean();
+    return properties.map((property: any) => ({
+      ...property,
+      _id: property._id.toString(),
+      createdAt: property.createdAt?.toISOString?.() ?? '',
+      updatedAt: property.updatedAt?.toISOString?.() ?? '',
+    }));
   } catch (error) {
     console.error('Error fetching featured properties:', error);
     return [];
@@ -32,9 +37,14 @@ async function getFeaturedProperties() {
 async function getRegions() {
   const db = await connectDB();
   if (!db) return [];
-
   try {
-    return await Region.find({}).sort({ createdAt: -1 });
+    const regions = await Region.find({}).sort({ createdAt: -1 }).lean();
+    return regions.map((region: any) => ({
+      ...region,
+      _id: region._id.toString(),
+      createdAt: region.createdAt?.toISOString?.() ?? '',
+      updatedAt: region.updatedAt?.toISOString?.() ?? '',
+    }));
   } catch (error) {
     console.error('Error fetching regions:', error);
     return [];
@@ -44,9 +54,14 @@ async function getRegions() {
 async function getFeaturedCars() {
   const db = await connectDB();
   if (!db) return [];
-
   try {
-    return await Car.find({ isAvailable: true, isFeatured: true }).limit(3).sort({ createdAt: -1 });
+    const cars = await Car.find({ isAvailable: true, isFeatured: true }).limit(3).sort({ createdAt: -1 }).lean();
+    return cars.map((car: any) => ({
+      ...car,
+      _id: car._id.toString(),
+      createdAt: car.createdAt?.toISOString?.() ?? '',
+      updatedAt: car.updatedAt?.toISOString?.() ?? '',
+    }));
   } catch (error) {
     console.error('Error fetching featured cars:', error);
     return [];

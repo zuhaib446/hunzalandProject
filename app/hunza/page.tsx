@@ -17,7 +17,13 @@ async function getHunzaProperties() {
   if (!db) return [];
   
   try {
-    return await Property.find({ region: 'hunza' }).sort({ createdAt: -1 });
+    const properties = await Property.find({ region: 'hunza' }).sort({ createdAt: -1 }).lean();
+    return properties.map((property: any) => ({
+      ...property,
+      _id: property._id.toString(),
+      createdAt: property.createdAt?.toISOString?.() ?? '',
+      updatedAt: property.updatedAt?.toISOString?.() ?? '',
+    }));
   } catch (error) {
     console.error('Error fetching Hunza properties:', error);
     return [];
