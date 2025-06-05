@@ -29,11 +29,41 @@ export default function CarList({ cars }: { cars: any[] }) {
                 {car.isAvailable ? 'Available' : 'Not Available'}
               </span>
             </div>
-            <Button 
-              className="w-full"
-              disabled={!car.isAvailable}
-              onClick={() => window.open('https://wa.me/923468824466?text=I%20am%20interested%20in%20renting%20this%20car:%20' + car.title, '_blank')}
+            <Button
+              className="w-full mb-2"
+              variant="default"
+              onClick={() => window.location.href = `/rent-a-car/${car._id}`}
             >
+              View Details
+            </Button>
+            <Button
+              className="w-full flex items-center justify-center gap-2 font-semibold"
+              style={{
+                backgroundColor: car.isAvailable ? '#25D366' : undefined,
+                color: car.isAvailable ? 'white' : undefined,
+                opacity: car.isAvailable ? 1 : 0.6,
+                cursor: car.isAvailable ? 'pointer' : 'not-allowed',
+              }}
+              disabled={!car.isAvailable}
+              onClick={() =>
+                window.open(
+                  'https://wa.me/923468824466?text=I%20am%20interested%20in%20renting%20this%20car:%20' + car.title,
+                  '_blank'
+                )
+              }
+            >
+              {/* WhatsApp SVG Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 32 32"
+                fill="currentColor"
+              >
+                <path
+                  d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.236 6.385L4 29l7.828-2.049C13.416 27.168 14.684 27.5 16 27.5c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.168 0-2.312-.168-3.393-.496l-.242-.072-4.393 1.15 1.176-4.285-.158-.244C7.168 19.312 7 18.168 7 17c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.293-7.707c-.293-.293-.768-.293-1.061 0l-1.293 1.293c-.293.293-.293.768 0 1.061.293.293.768.293 1.061 0l1.293-1.293c.293-.293.293-.768 0-1.061zm-7.586 0c-.293.293-.293.768 0 1.061l1.293 1.293c.293.293.768.293 1.061 0 .293-.293.293-.768 0-1.061l-1.293-1.293c-.293-.293-.768-.293-1.061 0z"
+                  fill="#fff"
+                />
+              </svg>
               {car.isAvailable ? 'Book Now' : 'Not Available'}
             </Button>
           </div>
