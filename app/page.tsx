@@ -20,7 +20,7 @@ const heroImages = [
 async function getFeaturedProperties() {
   const db = await connectDB();
   if (!db) return [];
-  
+
   try {
     return await Property.find({ isFeatured: true }).sort({ createdAt: -1 });
   } catch (error) {
@@ -32,7 +32,7 @@ async function getFeaturedProperties() {
 async function getRegions() {
   const db = await connectDB();
   if (!db) return [];
-  
+
   try {
     return await Region.find({}).sort({ createdAt: -1 });
   } catch (error) {
@@ -44,7 +44,7 @@ async function getRegions() {
 async function getFeaturedCars() {
   const db = await connectDB();
   if (!db) return [];
-  
+
   try {
     return await Car.find({ isAvailable: true, isFeatured: true }).limit(3).sort({ createdAt: -1 });
   } catch (error) {
@@ -59,15 +59,15 @@ export default async function Home() {
     getRegions(),
     getFeaturedCars()
   ]);
-  
+
   return (
     <div className="flex flex-col min-h-screen">
-      <HeroSection 
+      <HeroSection
         title="Premium Properties in Northern Pakistan"
         subtitle="Discover exclusive investment opportunities in Hunza, Gilgit, and surrounding regions with breathtaking mountain views and high appreciation potential."
         images={heroImages}
       />
-      
+
       <section className="py-16 bg-white dark:bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -76,7 +76,7 @@ export default async function Home() {
               We offer premium land and property opportunities in the most scenic locations of northern Pakistan.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -87,7 +87,7 @@ export default async function Home() {
                 Carefully selected plots in the most desirable and scenic locations across northern Pakistan.
               </p>
             </div>
-            
+
             <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Award className="h-7 w-7 text-primary" />
@@ -97,7 +97,7 @@ export default async function Home() {
                 All our properties come with clean titles and complete legal documentation for your peace of mind.
               </p>
             </div>
-            
+
             <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <MapPin className="h-7 w-7 text-primary" />
@@ -107,7 +107,7 @@ export default async function Home() {
                 Decades of experience and deep local knowledge of the northern Pakistan property market.
               </p>
             </div>
-            
+
             <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Clock className="h-7 w-7 text-primary" />
@@ -120,7 +120,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -129,7 +129,7 @@ export default async function Home() {
               Explore our most exceptional land opportunities across northern Pakistan.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.length === 0 ? (
               <div className="col-span-full text-center py-8">
@@ -141,7 +141,7 @@ export default async function Home() {
               ))
             )}
           </div>
-          
+
           <div className="text-center mt-12">
             <Button asChild size="lg">
               <Link href="/allProperty">
@@ -151,7 +151,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
       <section className="py-16 bg-white dark:bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -160,21 +160,38 @@ export default async function Home() {
               Discover properties across the most scenic locations in northern Pakistan.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {regions.map((region) => (
-              <RegionCard
+              <div
                 key={region._id}
-                title={region.title}
-                description={region.description}
-                imageSrc={region.imageSrc}
-                href={`/${region.slug}`}
-              />
+                className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-card"
+              >
+                <img
+                  src={region.imageSrc}
+                  alt={region.title}
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+                  <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">{region.title}</h3>
+                  <p className="text-white text-opacity-90 mb-4 line-clamp-2">{region.description}</p>
+                  <a
+                    href={`/${region.slug}`}
+                    className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition"
+                  >
+                    Explore&nbsp;
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
-      
+
       <section className="py-16 bg-white dark:bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -188,8 +205,8 @@ export default async function Home() {
             {featuredCars.map((car) => (
               <Card key={car._id} className="overflow-hidden">
                 <div className="aspect-video relative">
-                  <img 
-                    src={car.images[0]} 
+                  <img
+                    src={car.images[0]}
                     alt={car.title}
                     className="w-full h-full object-cover"
                   />
@@ -225,7 +242,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
       <section className="py-16 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Find Your Perfect Property?</h2>
