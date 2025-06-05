@@ -83,51 +83,53 @@ export default async function Home() {
         images={heroImages}
       />
 
-      <section className="py-16 bg-white dark:bg-background">
-          <div className="container mx-auto px-4">
+      <section className="py-16 bg-gradient-to-b from-white to-muted/30 dark:from-background dark:to-muted/10">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">Why Choose Us</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary drop-shadow-lg">
+              Why Choose Us
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               We offer premium land and property opportunities in the most scenic locations of northern Pakistan.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Building className="h-7 w-7 text-primary" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Building className="h-8 w-8 text-primary group-hover:animate-bounce" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Premium Locations</h3>
+              <h3 className="text-lg font-bold mb-2 text-primary">Premium Locations</h3>
               <p className="text-muted-foreground">
                 Carefully selected plots in the most desirable and scenic locations across northern Pakistan.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Award className="h-7 w-7 text-primary" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Award className="h-8 w-8 text-primary group-hover:animate-bounce" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Legal Documentation</h3>
+              <h3 className="text-lg font-bold mb-2 text-primary">Legal Documentation</h3>
               <p className="text-muted-foreground">
                 All our properties come with clean titles and complete legal documentation for your peace of mind.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <MapPin className="h-7 w-7 text-primary" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <MapPin className="h-8 w-8 text-primary group-hover:animate-bounce" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Local Expertise</h3>
+              <h3 className="text-lg font-bold mb-2 text-primary">Local Expertise</h3>
               <p className="text-muted-foreground">
                 Decades of experience and deep local knowledge of the northern Pakistan property market.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-card hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Clock className="h-7 w-7 text-primary" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Clock className="h-8 w-8 text-primary group-hover:animate-bounce" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">24/7 Support</h3>
+              <h3 className="text-lg font-bold mb-2 text-primary">24/7 Support</h3>
               <p className="text-muted-foreground">
                 Our dedicated team is always available to answer your questions and provide guidance.
               </p>

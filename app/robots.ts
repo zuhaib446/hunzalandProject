@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/admin/'],
     },
-    sitemap: 'https://www.hunzaland.com/sitemap.xml',
+    sitemap: 'https://hunzarealestate.com/sitemap.xml',
   }
 }

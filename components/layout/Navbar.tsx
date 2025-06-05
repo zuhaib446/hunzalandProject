@@ -40,7 +40,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <MapPin className="h-6 w-6 text-primary" />
-          <span className="font-bold text-lg md:text-xl text-foreground">Hunza Land</span>
+          <span className="font-bold text-lg md:text-xl text-foreground">Hunza Land </span>
         </Link>
 
         {/* Desktop Navigation */}
