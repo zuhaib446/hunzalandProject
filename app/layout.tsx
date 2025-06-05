@@ -7,14 +7,15 @@ import Footer from '@/components/layout/Footer';
 import ContactFloat from '@/components/layout/ContactFloat';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.hunzarealestate.com'),
+  metadataBase: new URL('https://hunzarealestate.com'),
   title: {
-    default: 'Hunza Real Estate - Premium Properties & Land in Northern Pakistan',
+    default: 'Hunza Real Estate - Premium Land & Properties in Northern Pakistan',
     template: '%s | Hunza Real Estate'
   },
   description: 'Discover exclusive land and property opportunities in Hunza, Gilgit, and Northern Pakistan. Premium plots with stunning mountain views, commercial properties, and high-return investment options. Your trusted partner in Northern Pakistan real estate.',
   keywords: [
     'Hunza real estate',
+    'land for sale Hunza',
     'property for sale Hunza',
     'Gilgit real estate',
     'Northern Pakistan property',
@@ -29,25 +30,33 @@ export const metadata: Metadata = {
     'commercial property Gilgit',
     'residential plots Hunza',
     'property investment Northern Pakistan',
-    'Hunza Land for Sale'
+    'Hunza Land for Sale',
+    'Gilgit-Baltistan real estate',
+    'tourist land investment',
+    'KKH property investment',
+    'Hunza commercial plots',
+    'Gilgit residential land',
+    'mountain view property',
+    'riverside plots Hunza',
+    'Karakoram Highway property'
   ],
   authors: [{ name: 'Hunza Real Estate' }],
   creator: 'Hunza Real Estate',
   publisher: 'Hunza Real Estate',
   formatDetection: {
     telephone: true,
-    email: true,
+    email: false,
     address: true,
   },
   alternates: {
-    canonical: 'https://www.hunzarealestate.com'
+    canonical: 'https://hunzarealestate.com'
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.hunzarealestate.com',
+    url: 'https://hunzarealestate.com',
     siteName: 'Hunza Real Estate',
-    title: 'Hunza Real Estate - Premium Properties in Northern Pakistan',
+    title: 'Hunza Real Estate - Premium Land & Properties in Northern Pakistan',
     description: 'Discover exclusive land and property opportunities in Hunza, Gilgit, and Northern Pakistan. Premium plots with stunning mountain views and high appreciation potential.',
     images: [
       {
@@ -60,7 +69,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hunza Real Estate - Premium Properties in Northern Pakistan',
+    title: 'Hunza Real Estate - Premium Land & Properties in Northern Pakistan',
     description: 'Discover exclusive land and property opportunities in Hunza, Gilgit, and Northern Pakistan.',
     images: ['https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg'],
     creator: '@hunzarealestate',
@@ -79,8 +88,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-    yahoo: 'your-yahoo-verification-code',
   },
 };
 
@@ -92,7 +99,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="canonical" href="https://www.hunzarealestate.com" />
+        <link rel="canonical" href="https://hunzarealestate.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
         <link rel="manifest" href="/manifest.json" />
