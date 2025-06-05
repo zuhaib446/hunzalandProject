@@ -39,14 +39,13 @@ export default function ContactFloat() {
           <span className="sr-only">WhatsApp Contact</span>
         </Button>
         
-        <Button
-          as="a"
+        <a
           href="tel:+923469750335"
-          className="rounded-full w-14 h-14 bg-primary hover:bg-primary/90 shadow-lg"
+          className="rounded-full w-14 h-14 bg-primary hover:bg-primary/90 shadow-lg flex items-center justify-center"
         >
           <Phone className="h-6 w-6" />
           <span className="sr-only">Call Now</span>
-        </Button>
+        </a>
       </div>
     </div>
   )

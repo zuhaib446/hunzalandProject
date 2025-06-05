@@ -264,28 +264,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      <section className="py-16 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Find Your Perfect Property?</h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Contact us today to discuss your requirements and discover the perfect land opportunity.
-          </p>
-          <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
-            <Button size="lg" variant="secondary" asChild>
-              <a href="tel:+923468824466">
-                <PhoneCall className="mr-2 h-5 w-5" />
-                Call: 0346882446
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white/10" asChild>
-              <Link href="/contact">
-                Contact Us
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

@@ -32,7 +32,10 @@ export default function PropertyCard({ property, featured = false }: PropertyCar
   };
 
   // Convert Mongoose document to plain object if needed
-  const propertyData = property.toJSON ? property.toJSON() : property;
+  const propertyData =
+    typeof (property as any).toJSON === "function"
+      ? (property as any).toJSON()
+      : property;
 
   return (
     <Card className={`overflow-hidden transition-shadow hover:shadow-lg ${
