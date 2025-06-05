@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { MapPin, Phone, Clock } from 'lucide-react'
 import ContactForm from '@/components/ui/ContactForm'
 
 export default function ContactPage() {
@@ -29,19 +29,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
-                    <p className="text-muted-foreground">0346882446</p>
-                    <p className="text-muted-foreground">0300-1234567</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                    <Mail className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium mb-1">Email</h3>
-                    <p className="text-muted-foreground">info@hunzaland.com</p>
-                    <p className="text-muted-foreground">sales@hunzaland.com</p>
+                    <p className="text-muted-foreground">+923469750335</p>
                   </div>
                 </div>
                 
@@ -72,7 +60,7 @@ export default function ContactPage() {
               <div className="mt-8 p-4 bg-muted rounded-md">
                 <h3 className="text-sm font-medium mb-2">WhatsApp Contact</h3>
                 <p className="text-sm text-muted-foreground">
-                  For quick responses, contact us via WhatsApp at 0346882446
+                  For quick responses, contact us via WhatsApp at +923469750335
                 </p>
               </div>
             </div>
