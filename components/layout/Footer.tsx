@@ -18,10 +18,10 @@ export default function Footer() {
               Providing premium land opportunities in the beautiful northern regions of Pakistan including Hunza, Gilgit, Naltar, and more.
             </p>
             <div className="flex space-x-3">
-              <Link href="#" className="text-primary-foreground hover:text-primary-foreground/80 transition">
+              <Link href="https://facebook.com/hunzarealestate" className="text-primary-foreground hover:text-primary-foreground/80 transition">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-primary-foreground hover:text-primary-foreground/80 transition">
+              <Link href="https://instagram.com/hunzarealestate" className="text-primary-foreground hover:text-primary-foreground/80 transition">
                 <Instagram className="h-5 w-5" />
               </Link>
             </div>
