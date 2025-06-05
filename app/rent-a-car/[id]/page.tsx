@@ -12,7 +12,7 @@ import { toast } from 'sonner'
 
 export default function carDetail({ params }: { params: { id: string } }) {
   const router = useRouter()
-  const [car , setCar] = useState<any>(null)
+  const [car, setCar] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const { id } = params
@@ -38,9 +38,29 @@ export default function carDetail({ params }: { params: { id: string } }) {
 
   if (isLoading) {
     return (
-      <div className="pt-24 pb-16 text-center">
+      <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl font-bold mb-4">Loading...</h1>
+          <div className="animate-pulse grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Image Skeleton */}
+            <div className="lg:col-span-2">
+              <div className="rounded-lg bg-gray-200 dark:bg-gray-700 h-[400px] md:h-[500px] w-full mb-4" />
+              <div className="flex space-x-2 mt-4">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="w-20 h-20 rounded-md bg-gray-200 dark:bg-gray-700" />
+                ))}
+              </div>
+              <div className="mt-8 space-y-4">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4" />
+              </div>
+            </div>
+            {/* Sidebar Skeleton */}
+            <div>
+              <div className="rounded-lg bg-gray-200 dark:bg-gray-700 h-96 w-full mb-4" />
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -60,20 +80,20 @@ export default function carDetail({ params }: { params: { id: string } }) {
       </div>
     )
   }
-  
+
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % car.images.length)
   }
-  
+
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + car.images.length) % car.images.length)
   }
 
 
-   const handleContact = () => {
+  const handleContact = () => {
     toast.success("Thank you for your interest! Our agent will contact you shortly.")
   }
-  
+
   return (
     <div className="pt-24 pb-16">
       <div className="container mx-auto px-4">
@@ -81,58 +101,56 @@ export default function carDetail({ params }: { params: { id: string } }) {
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to rent a car listings
         </Button>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Property Images */}
           <div className="lg:col-span-2">
             <div className="relative rounded-lg overflow-hidden h-[400px] md:h-[500px]">
-             <Image
+              <Image
                 src={car.images[currentImageIndex]}
                 alt={`Car view ${currentImageIndex + 1}`}
                 fill
                 className="object-cover"
               />
-              
-              <Button 
-                variant="ghost" 
-                size="icon" 
+
+              <Button
+                variant="ghost"
+                size="icon"
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 text-white hover:bg-black/50"
                 onClick={prevImage}
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
-              
-              <Button 
-                variant="ghost" 
-                size="icon" 
+
+              <Button
+                variant="ghost"
+                size="icon"
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 text-white hover:bg-black/50"
                 onClick={nextImage}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
-              
+
               <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
                 {car.images.map((_: string, index: number) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentImageIndex ? "bg-white w-4" : "bg-white/60"
-                    }`}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentImageIndex ? "bg-white w-4" : "bg-white/60"
+                      }`}
                     aria-label={`View image ${index + 1}`}
                   />
                 ))}
               </div>
             </div>
-            
+
             <div className="mt-4 flex space-x-2 overflow-x-auto pb-2">
               {car.images.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`flex-shrink-0 relative w-20 h-20 rounded-md overflow-hidden border-2 transition ${
-                    index === currentImageIndex ? "border-primary" : "border-transparent"
-                  }`}
+                  className={`flex-shrink-0 relative w-20 h-20 rounded-md overflow-hidden border-2 transition ${index === currentImageIndex ? "border-primary" : "border-transparent"
+                    }`}
                 >
                   <Image
                     src={image}
@@ -143,11 +161,11 @@ export default function carDetail({ params }: { params: { id: string } }) {
                 </button>
               ))}
             </div>
-            
+
             <div className="mt-8">
               <h2 className="text-2xl font-bold mb-4">Car Description</h2>
               <p className="text-muted-foreground mb-6">{car.description}</p>
-              
+
               <h3 className="text-xl font-semibold mb-3">Features</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4 mb-8">
                 {car.features && car.features.map((feature: string, index: number) => (
@@ -157,26 +175,26 @@ export default function carDetail({ params }: { params: { id: string } }) {
                   </div>
                 ))}
               </div>
-              
+
               <h3 className="text-xl font-semibold mb-3">Location Information</h3>
               <p className="text-muted-foreground mb-4">
                 This car is located in a prime area of {car.location}, offering convenient access to local amenities and attractions.
               </p>
-              
+
               <div className="rounded-lg overflow-hidden h-64 mb-8">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12858.69012551308!2d74.59925061906857!3d36.32318040980828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e8a0c36eb73e95%3A0xfa7bba9ced975e2d!2sHunza!5e0!3m2!1sen!2s!4v1620812345678!5m2!1sen!2s" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen 
-                  loading="lazy" 
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12858.69012551308!2d74.59925061906857!3d36.32318040980828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e8a0c36eb73e95%3A0xfa7bba9ced975e2d!2sHunza!5e0!3m2!1sen!2s!4v1620812345678!5m2!1sen!2s"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
             </div>
           </div>
-          
+
           {/* Property Details Sidebar */}
           <div>
             <Card className="sticky top-24">
@@ -197,21 +215,20 @@ export default function carDetail({ params }: { params: { id: string } }) {
                       <span className="font-medium">Price/Day</span>
                     </div>
                     <span className="font-semibold">
-          PKR {car.pricePerDay?.toLocaleString()} / day
-        </span>
+                      PKR {car.pricePerDay?.toLocaleString()} / day
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <Check className="h-5 w-5 text-primary mr-2" />
                       <span className="font-medium">Available</span>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-sm ${
-          car.isAvailable
-            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-        }`}>
-          {car.isAvailable ? 'Yes' : 'No'}
-        </span>
+                    <span className={`px-3 py-1 rounded-full text-sm ${car.isAvailable
+                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                        : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                      }`}>
+                      {car.isAvailable ? 'Yes' : 'No'}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
@@ -228,12 +245,12 @@ export default function carDetail({ params }: { params: { id: string } }) {
                     <span>{car.fuelIncluded ? 'Yes' : 'No'}</span>
                   </div>
                   {car.isFeatured && (
-        <div className="flex items-center">
-          <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold">
-            Featured
-          </span>
-        </div>
-      )}
+                    <div className="flex items-center">
+                      <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold">
+                        Featured
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <Separator className="my-4" />

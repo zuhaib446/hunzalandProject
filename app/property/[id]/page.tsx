@@ -35,9 +35,29 @@ export default function PropertyDetail({ params }: { params: { id: string } }) {
   
   if (isLoading) {
     return (
-      <div className="pt-24 pb-16 text-center">
+      <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl font-bold mb-4">Loading...</h1>
+          <div className="animate-pulse grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Image Skeleton */}
+            <div className="lg:col-span-2">
+              <div className="rounded-lg bg-gray-200 dark:bg-gray-700 h-[400px] md:h-[500px] w-full mb-4" />
+              <div className="flex space-x-2 mt-4">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="w-20 h-20 rounded-md bg-gray-200 dark:bg-gray-700" />
+                ))}
+              </div>
+              <div className="mt-8 space-y-4">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4" />
+              </div>
+            </div>
+            {/* Sidebar Skeleton */}
+            <div>
+              <div className="rounded-lg bg-gray-200 dark:bg-gray-700 h-96 w-full mb-4" />
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -214,11 +234,31 @@ export default function PropertyDetail({ params }: { params: { id: string } }) {
                     Contact Agent
                   </Button>
                   
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => window.open('https://wa.me/923468824466?text=I%20am%20interested%20in%20this%20property:%20' + property.title, '_blank')}
+                  <Button
+                    className="w-full flex items-center justify-center gap-2 font-semibold"
+                    style={{
+                      backgroundColor: '#25D366',
+                      color: 'white',
+                    }}
+                    onClick={() =>
+                      window.open(
+                        'https://wa.me/923468824466?text=I%20am%20interested%20in%20this%20property:%20' + property.title,
+                        '_blank'
+                      )
+                    }
                   >
+                    {/* WhatsApp SVG Icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 32 32"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.236 6.385L4 29l7.828-2.049C13.416 27.168 14.684 27.5 16 27.5c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.168 0-2.312-.168-3.393-.496l-.242-.072-4.393 1.15 1.176-4.285-.158-.244C7.168 19.312 7 18.168 7 17c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.293-7.707c-.293-.293-.768-.293-1.061 0l-1.293 1.293c-.293.293-.293.768 0 1.061.293.293.768.293 1.061 0l1.293-1.293c.293-.293.293-.768 0-1.061zm-7.586 0c-.293.293-.293.768 0 1.061l1.293 1.293c.293.293.768.293 1.061 0 .293-.293.293-.768 0-1.061l-1.293-1.293c-.293-.293-.768-.293-1.061 0z"
+                        fill="#fff"
+                      />
+                    </svg>
                     WhatsApp Inquiry
                   </Button>
                 </div>
