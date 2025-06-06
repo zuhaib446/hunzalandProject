@@ -4,6 +4,7 @@ import PropertyCard from '@/components/ui/PropertyCard'
 import { Property } from '@/lib/models/property'
 import { connectDB } from '@/lib/mongodb'
 import { Metadata } from 'next'
+
 export const metadata: Metadata = {
   title: 'Skardu Land For Sale - Premium Properties in Skardu Valley',
   description: 'Explore premium land opportunities in the breathtaking Skardu Valley. Discover stunning mountain views and investment potential with our exclusive properties.',
@@ -25,7 +26,6 @@ export const metadata: Metadata = {
     url: 'https://www.hunzarealestate.com/skardu',
     images: [
       {
-        // GET REAL IMAGE URL OF SKARDU FORM ANY FREE IMAGE SOURCE
         url: 'https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg',
         width: 1200,
         height: 630,
@@ -44,9 +44,14 @@ const heroImages = [
 async function getSkarduProperties() {
   const db = await connectDB();
   if (!db) return [];
-  
   try {
-    return await Property.find({ region: 'skardu' }).sort({ createdAt: -1 });
+    const properties = await Property.find({ region: 'skardu' }).sort({ createdAt: -1 }).lean();
+    return properties.map((property: any) => ({
+      ...property,
+      _id: property._id.toString(),
+      createdAt: property.createdAt?.toISOString?.() ?? '',
+      updatedAt: property.updatedAt?.toISOString?.() ?? '',
+    }));
   } catch (error) {
     console.error('Error fetching Skardu properties:', error);
     return [];
@@ -74,7 +79,6 @@ export default async function SkarduPage() {
               Explore our selection of premium land plots and properties across Skardu Valley.
             </p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.length === 0 ? (
               <div className="col-span-full text-center py-12">
@@ -94,33 +98,64 @@ export default async function SkarduPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4">About Skardu Valley</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">About Skardu Valley</h2>
               <p className="mb-4 text-muted-foreground">
-                Skardu Valley is a stunning region in Gilgit-Baltistan, Pakistan, known for its dramatic landscapes, towering peaks, and serene lakes. It serves as the gateway to some of the world's highest mountains, including K2.
+                Skardu Valley, the jewel of Gilgit-Baltistan, is famed for its dramatic landscapes, crystal-clear lakes, and towering peaks. As the gateway to the mighty Karakoram and Himalayas, Skardu is a paradise for adventurers, nature lovers, and investors.
               </p>
               <p className="mb-4 text-muted-foreground">
-                Skardu is famous for its breathtaking natural beauty, rich culture, and warm hospitality. The valley attracts tourists, trekkers, and adventure seekers from around the world, making it an increasingly popular destination for property investment.
+                The valley is home to iconic destinations like Shangrila Lake, Sheosar Lake, and Deosai National Park. Skardu’s rich culture, warm hospitality, and growing tourism sector make it an ideal location for both living and investment.
               </p>
               <p className="mb-6 text-muted-foreground">
-                Our land plots in Skardu offer unparalleled views of the surrounding mountains and valleys, with many properties located near iconic sites like Shangrila Lake, Sheosar Lake, and the Deosai National Park.
+                Our land plots in Skardu are carefully selected for their panoramic views, accessibility, and proximity to key attractions. Whether you dream of a mountain retreat, a boutique hotel, or a high-yield investment, Skardu is the perfect destination.
               </p>
-              <div className="space-y-3">
-                <div className="flex items-start">
-                  <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-2" />
-                  <p><span className="font-medium">Strategic Location:</span> Close to main roads, utilities, and amenities.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M12 2l4 4-4 4-4-4 4-4zm0 8v12"></path></svg>
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Spectacular Views</p>
+                    <p className="text-muted-foreground text-sm">Plots with breathtaking vistas of mountains, lakes, and valleys.</p>
+                  </div>
+                </div>
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M3 12l2-2 4 4 8-8 2 2-10 10z"></path></svg>
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Tourism Hotspot</p>
+                    <p className="text-muted-foreground text-sm">High rental yields and business potential due to year-round tourism.</p>
+                  </div>
+                </div>
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Rich Heritage</p>
+                    <p className="text-muted-foreground text-sm">Home to ancient forts, vibrant festivals, and unique traditions.</p>
+                  </div>
+                </div>
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 17.93c-4.02-.47-7.19-3.85-7.19-7.93 0-.62.08-1.21.21-1.79l5.98 5.98v.01c.13.13.29.22.47.22.18 0 .34-.09.47-.22l2.1-2.1c.13-.13.22-.29.22-.47 0-.18-.09-.34-.22-.47l-5.98-5.98c.58-.13 1.17-.21 1.79-.21 4.08 0 7.46 3.17 7.93 7.19l-2.1 2.1c-.13.13-.22.29-.22.47 0 .18.09.34.22.47l2.1 2.1z"></path></svg>
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Investment Potential</p>
+                    <p className="text-muted-foreground text-sm">Ideal for resorts, hotels, and high-value real estate in a booming tourism market.</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-2" />
-                <p><span className="font-medium">Tourism Potential:</span> Growing tourism sector with high rental yields.</p>
-              </div>
-              <div className="flex items-start">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-2" />
-                <p><span className="font-medium">Capital Appreciation:</span> Skardu property values consistently rising.</p>
+              <div className="mt-6">
+                <a
+                  href="/contact"
+                  className="inline-block px-6 py-3 rounded-lg bg-primary text-white font-semibold shadow hover:bg-primary/90 transition"
+                >
+                  Contact Us for Skardu Opportunities
+                </a>
               </div>
             </div>
-            
-            <div className="grid grid-cols-2 gap-4 mt-8">
+            <div className="grid grid-cols-2 gap-4">
               <div className="rounded-lg overflow-hidden h-64">
                 <img 
                   src="https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg" 
@@ -130,7 +165,7 @@ export default async function SkarduPage() {
               </div>
               <div className="rounded-lg overflow-hidden h-64">
                 <img 
-                  src="https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg" 
+                  src="https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg" 
                   alt="Skardu Mountains" 
                   className="w-full h-full object-cover"
                 />
@@ -142,39 +177,6 @@ export default async function SkarduPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-white dark:bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Invest in Skardu?</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Skardu offers a unique blend of natural beauty, cultural richness, and investment potential. With its stunning landscapes and growing tourism sector, it's an ideal location for property investment.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Add more content here as needed */}
-            <div className="bg-white dark:bg-card p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-2">Scenic Beauty</h3>
-              <p className="text-muted-foreground mb-4">
-                Skardu is renowned for its breathtaking landscapes, including majestic mountains, serene lakes, and lush valleys.
-              </p>
-            </div>
-            <div className="bg-white dark:bg-card p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-2">Cultural Richness</h3>
-              <p className="text-muted-foreground mb-4">
-                The region is rich in culture and history, with friendly locals and unique traditions that enhance the living experience.
-              </p>
-            </div>
-            <div className="bg-white dark:bg-card p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-2">Investment Potential</h3>
-              <p className="text-muted-foreground mb-4">
-                Skardu's real estate market is poised for growth, making it an attractive option for investors seeking long-term value.
-              </p>
             </div>
           </div>
         </div>
