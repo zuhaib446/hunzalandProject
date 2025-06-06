@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import * as argon2 from 'argon2';
 import clientPromise from '@/lib/mongodb';
+import { RateLimiterMemory } from 'rate-limiter-flexible';
 
 declare module 'next-auth' {
   interface User {
@@ -15,6 +16,12 @@ declare module 'next-auth' {
   }
 }
 
+const maxWrongAttemptsByIPperMinute = 5;
+const limiter = new RateLimiterMemory({
+  points: maxWrongAttemptsByIPperMinute,
+  duration: 60, // Per minute
+});
+
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -23,8 +30,14 @@ const handler = NextAuth({
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
+        const ip =
+          req?.headers && req.headers['x-forwarded-for']
+            ? req.headers['x-forwarded-for'].toString().split(',')[0]
+            : 'unknown';
         try {
+          await limiter.consume(ip);
+
           if (!credentials?.email || !credentials?.password) {
             throw new Error('Invalid credentials');
           }
@@ -34,8 +47,8 @@ const handler = NextAuth({
           const users = db.collection('users');
 
           // Create admin user if not exists
-          const adminEmail = 'admin@hunzaland.com';
-          const adminPassword = 'admin123';
+          const adminEmail = 'admin@hunzarealestate.com';
+          const adminPassword = 'admin@123';
           const admin = await users.findOne({ email: adminEmail });
           
           if (!admin) {
@@ -93,6 +106,7 @@ const handler = NextAuth({
   },
   session: {
     strategy: 'jwt',
+    maxAge: 60 * 60, // 1 hour (in seconds)
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
