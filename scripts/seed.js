@@ -166,6 +166,10 @@ async function seedDatabase() {
     await db.collection('properties').insertMany(properties);
     await db.collection('cars').insertMany(cars);
 
+    // Optionally, log inserted properties
+    const insertedProperties = await db.collection('properties').find({}).toArray();
+    console.log(insertedProperties);
+
     console.log('Database seeded successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);
