@@ -83,10 +83,10 @@ export default async function Home() {
         images={heroImages}
       />
 
-      <section className="py-16 bg-gradient-to-b from-white to-muted/30 dark:from-background dark:to-muted/10">
+      <section className="py-16 bg-gradient-to-b from-white to-gray-50 dark:from-background dark:to-muted/10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary drop-shadow-lg">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gradient mb-4">
               Why Choose Us
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -95,9 +95,9 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-                <Building className="h-8 w-8 text-primary group-hover:animate-bounce" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-all duration-300 group border border-primary/10">
+              <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Building className="h-8 w-8 text-white group-hover:animate-bounce" />
               </div>
               <h3 className="text-lg font-bold mb-2 text-primary">Premium Locations</h3>
               <p className="text-muted-foreground">
@@ -105,9 +105,9 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-                <Award className="h-8 w-8 text-primary group-hover:animate-bounce" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-all duration-300 group border border-primary/10">
+              <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Award className="h-8 w-8 text-white group-hover:animate-bounce" />
               </div>
               <h3 className="text-lg font-bold mb-2 text-primary">Legal Documentation</h3>
               <p className="text-muted-foreground">
@@ -115,9 +115,9 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-                <MapPin className="h-8 w-8 text-primary group-hover:animate-bounce" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-all duration-300 group border border-primary/10">
+              <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <MapPin className="h-8 w-8 text-white group-hover:animate-bounce" />
               </div>
               <h3 className="text-lg font-bold mb-2 text-primary">Local Expertise</h3>
               <p className="text-muted-foreground">
@@ -125,9 +125,9 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-                <Clock className="h-8 w-8 text-primary group-hover:animate-bounce" />
+            <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-muted shadow-lg hover:shadow-2xl transition-all duration-300 group border border-primary/10">
+              <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Clock className="h-8 w-8 text-white group-hover:animate-bounce" />
               </div>
               <h3 className="text-lg font-bold mb-2 text-primary">24/7 Support</h3>
               <p className="text-muted-foreground">
@@ -138,10 +138,10 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-gradient-to-br from-primary/5 to-primary/10">
          <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">Featured Properties</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gradient">Featured Properties</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Explore our most exceptional land opportunities across northern Pakistan.
             </p>
@@ -160,7 +160,7 @@ export default async function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="btn-primary">
               <Link href="/allProperty">
                 View All Properties
               </Link>
@@ -172,7 +172,7 @@ export default async function Home() {
       <section className="py-16 bg-white dark:bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gradient">
               Explore Regions
             </h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -184,7 +184,7 @@ export default async function Home() {
             {regions.map((region) => (
               <div
                 key={region._id}
-                className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-card"
+                className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-card border border-primary/10"
               >
                 <img
                   src={region.imageSrc}
@@ -197,7 +197,7 @@ export default async function Home() {
                   <p className="text-white text-opacity-90 mb-4 line-clamp-2">{region.description}</p>
                   <a
                     href={`/${region.slug}`}
-                    className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition"
+                    className="inline-flex items-center px-4 py-2 rounded-lg bg-gradient-primary text-white font-semibold shadow hover:shadow-lg transition-all duration-300 hover:scale-105"
                   >
                     Explore&nbsp;
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -211,10 +211,10 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-white to-muted dark:from-background dark:to-muted/10">
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-background dark:to-muted/10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gradient">
               Discover Our Featured Cars
             </h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -224,7 +224,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {featuredCars.map((car) => (
-              <Card key={car._id} className="overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <Card key={car._id} className="overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-primary/10">
                 <div className="aspect-video relative">
                   <img
                     src={car.images[0]}
@@ -249,7 +249,7 @@ export default async function Home() {
                       <p className="text-sm text-red-500 font-medium">Currently Unavailable</p>
                     )}
                   </div>
-                  <Button asChild className="w-full">
+                  <Button asChild className="w-full btn-primary">
                     <Link href={`/rent-a-car/${car._id}`}>View Details</Link>
                   </Button>
                 </div>
@@ -258,7 +258,7 @@ export default async function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Button asChild size="lg" className="px-8 py-4 text-lg font-semibold rounded-xl">
+            <Button asChild size="lg" className="btn-primary px-8 py-4 text-lg font-semibold rounded-xl">
               <Link href="/rent-a-car">Browse All Cars</Link>
             </Button>
           </div>
