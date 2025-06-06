@@ -181,16 +181,31 @@ export default function carDetail({ params }: { params: { id: string } }) {
                 This car is located in a prime area of {car.location}, offering convenient access to local amenities and attractions.
               </p>
 
-              <div className="rounded-lg overflow-hidden h-64 mb-8">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12858.69012551308!2d74.59925061906857!3d36.32318040980828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e8a0c36eb73e95%3A0xfa7bba9ced975e2d!2sHunza!5e0!3m2!1sen!2s!4v1620812345678!5m2!1sen!2s"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold mb-3">Terms &amp; Conditions</h3>
+                <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                  <li>
+                    <span className="font-medium text-primary">Fuel Policy:</span> Customers are responsible for their own fuel consumption. Each car is provided with a specific level of fuel, and the vehicle must be returned with the same fuel level. If the fuel level differs, the customer will be charged for the fuel difference, plus a PKR 500 service charge.
+                  </li>
+                  <li>
+                    <span className="font-medium text-primary">Accident Responsibility:</span> In case of any accident while driving without a company-provided driver, the customer will be fully responsible for all damages and liabilities.
+                  </li>
+                  <li>
+                    <span className="font-medium text-primary">Booking &amp; Payment:</span> Advance booking is required. Full payment must be made before the start of the rental period.
+                  </li>
+                  <li>
+                    <span className="font-medium text-primary">Identification:</span> Customers must provide a valid CNIC or passport and a valid driving license (for self-drive rentals).
+                  </li>
+                  <li>
+                    <span className="font-medium text-primary">Late Return:</span> Late return of the vehicle will incur additional charges as per the daily rate.
+                  </li>
+                  <li>
+                    <span className="font-medium text-primary">Cleanliness:</span> Vehicles must be returned in clean condition. Excessive dirt may result in a cleaning fee.
+                  </li>
+                  <li>
+                    <span className="font-medium text-primary">Prohibited Use:</span> The vehicle must not be used for illegal activities or driven outside permitted regions without prior approval.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

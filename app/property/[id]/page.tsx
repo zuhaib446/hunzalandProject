@@ -179,16 +179,48 @@ export default function PropertyDetail({ params }: { params: { id: string } }) {
                 This property is located in a prime area of {property.location}, offering convenient access to local amenities and attractions.
               </p>
               
-              <div className="rounded-lg overflow-hidden h-64 mb-8">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12858.69012551308!2d74.59925061906857!3d36.32318040980828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e8a0c36eb73e95%3A0xfa7bba9ced975e2d!2sHunza!5e0!3m2!1sen!2s!4v1620812345678!5m2!1sen!2s" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+             
+            </div>
+            
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold mb-3">Why Invest in This Property?</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <Square className="w-6 h-6 text-primary" />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Prime Location</p>
+                    <p className="text-muted-foreground text-sm">Located in a sought-after area with excellent access to amenities and attractions.</p>
+                  </div>
+                </div>
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <Wallet className="w-6 h-6 text-primary" />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">High ROI Potential</p>
+                    <p className="text-muted-foreground text-sm">Strong appreciation and rental demand in this region ensure a solid investment.</p>
+                  </div>
+                </div>
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <Check className="w-6 h-6 text-primary" />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Verified Documentation</p>
+                    <p className="text-muted-foreground text-sm">All legal documents and ownership papers are verified for your peace of mind.</p>
+                  </div>
+                </div>
+                <div className="flex items-start bg-white dark:bg-card rounded-lg shadow p-4">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-primary mb-1">Scenic Surroundings</p>
+                    <p className="text-muted-foreground text-sm">Enjoy beautiful views and a serene environment, perfect for living or investment.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
